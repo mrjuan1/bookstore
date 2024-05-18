@@ -1,0 +1,35 @@
+{
+  "name": "bookstore",
+  "description": "A small API to manage books, their authors and genres and calculate discounts on genre bundles",
+  "version": "0.0.1",
+  "author": "Juan Wolfaardt <juanwolfaardt@gmail.com>",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "nodemon",
+    "migrations:run": "cd db && typeorm-ts-node-commonjs migration:run -d data-source.mjs",
+    "migrations:revert": "cd db && typeorm-ts-node-commonjs migration:revert -d data-source.mjs",
+    "format": "prettier -lw .",
+    "type-check": "tsc",
+    "lint": "eslint .",
+    "checks": "npm run format && npm run type-check && npm run lint"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.5",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "@types/node": "^20.12.12",
+    "eslint": "^9.3.0",
+    "globals": "^15.2.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.0.0-alpha.13"
+  }
+}
