@@ -4,49 +4,63 @@ A small API to manage books, their authors and genres and calculate discounts on
 
 ## Requirements
 
-To run and build the project, NodeJS is required (v20+ as of writing this, but earlier versions down to v16 should work just fine too) with NPM. Yarn can probably be used too, but it's not what the project was developed with. Same goes for Bun.
+To run and build the project, NodeJS and NPM are required. Not tested with Yarn and Bun, some changes to `package.json` might be required for these _(will test and update later)_.
 
-For the DB, this application is built with PostgreSQL as the main DB in mind. MySQL or MariaDB might work as well, but you're on your own if you decide to use those or any others.
+NodeJS LTS v20.x was used as of writing this, but earlier versions down to v16 should work just fine too. Again, not tested with Bun, might or might not work _(will test and update later)_.
+
+For the DB, this application is built with PostgreSQL as the main DB in mind. MySQL or MariaDB might work as well _(will test and update later)_, but you're on your own if you decide to use those or any others _(might test a few others and update later)_.
 
 ## Setup
 
 The following steps are required initially as preparation for the application to be able to run or build.
 
-### Dependencies
+### Database and dependencies
 
-Run `npm i` to install the required dependencies. As mentioned above, Yarn or Bun can be used too, but the application wasn't developed with these in mind.
+Make sure your database server is up-and-running.
 
-### Database server
+Then run the following to install the required dependencies:
 
-Make sure your DB of choice is up-and-running.
+```sh
+npm install # or npm i for short
+```
 
 ### Environment variables
 
-Next, copy the `.env.example` file to `.env`. Open `.env` in an editor of your choice and update the values there to suit your needs. If you're using PostgreSQL as your DB of choice, the defaults should be fine and no changes are required.
+Next, copy the `.env.example` file to `.env`:
+
+```sh
+cp .env.example .env
+```
+
+Open `.env` in an editor of your choice and update the values there to suit your needs.
+
+If you're using PostgreSQL, the defaults should be fine without any changes are required.
 
 ### Database configuration
 
-Inside the `db` directory is a script called `setup-db.sh`. This script assumes your DB's root user is called "root". If it isn't, you can specify a different root username. That being said, you can run the script in one of the following two ways:
+Inside the `db` directory is a script called `setup-db.sh`. This script assumes your DB's root user is called "root". If it isn't, you can specify a different root username.
+
+That being said, you can run the script in one of the following two ways:
 
 ```sh
 db/setup-db.sh # assumes "root" as the DB's root user
 # ...or...
-db/setup-db.sh admin # uses "admin" as the DB's root user
+db/setup-db.sh admin # uses "admin" as the DB's root user, for example
 ```
 
-If you're running PostgreSQL, you'll be prompted for the DB's root user's password. The script will then create a user for migrations with the appropriate access as well as a database owned by the migrations user.
-
 This script makes use of the values in the `.env` file to set things up.
+
+If you're running PostgreSQL, you'll be prompted for the DB's root user's password. The script will then create a user for migrations with the appropriate access as well as a database owned by the migrations user.
 
 Additionally, if you ever want completely undo the changes made by this script, you can run the script as follows:
 
 ```sh
-db/setup-db.sh -c # assumes "root" as the DB's root user
+db/setup-db.sh -c
 # ...or...
-db/setup-db.sh -c admin # uses "admin" as the DB's root user
+db/setup-db.sh -c "your-db-root-user"
 ```
 
-If you're not running PostgreSQL, the script will give instructions of what you'll need to do to setup the migrations user and database yourself on the DB of your choice.
+If you're not running PostgreSQL, the script will give instructions of what you'll need to do to setup the migrations user and the database yourself on the DB of your choice.
 
 ### Migrations
 
@@ -74,7 +88,7 @@ The application can be started with the following command:
 npm start
 ```
 
-This will start a very simple dev server that will watch for code changes and restart if any are detected.
+This will start a very simple dev server that will watch for code changes and restart if any are detected in any typescript file or in your `.env` file.
 
 ## Code checking
 

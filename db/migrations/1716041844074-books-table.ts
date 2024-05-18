@@ -1,9 +1,8 @@
+import { apiUserUsername } from "@utils/db-api-user";
+import { generateNameColumn } from "@utils/name-column";
+import { timestamps } from "@utils/timestamps";
+import { uuidColumn } from "@utils/uuid-column";
 import { MigrationInterface, QueryRunner, Table, TableCheck, TableColumnOptions, TableForeignKey } from "typeorm";
-
-import { apiUserUsername } from "./utils/env-vars";
-import { generateNameColumn } from "./utils/name-column";
-import { timestamps } from "./utils/timestamps";
-import { uuidColumn } from "./utils/uuid-column";
 
 export class BooksTable1716041844074 implements MigrationInterface {
   private readonly booksTable!: Table;

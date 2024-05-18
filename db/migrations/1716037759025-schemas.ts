@@ -1,6 +1,5 @@
+import { apiUserUsername } from "@utils/db-api-user";
 import { MigrationInterface, QueryRunner } from "typeorm";
-
-import { apiUserUsername } from "./utils/env-vars";
 
 export class Schemas1716037759025 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

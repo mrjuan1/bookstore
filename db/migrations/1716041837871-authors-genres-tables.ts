@@ -1,9 +1,8 @@
+import { apiUserUsername } from "@utils/db-api-user";
+import { generateNameColumn } from "@utils/name-column";
+import { timestamps } from "@utils/timestamps";
+import { uuidColumn } from "@utils/uuid-column";
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-
-import { apiUserUsername } from "./utils/env-vars";
-import { generateNameColumn } from "./utils/name-column";
-import { timestamps } from "./utils/timestamps";
-import { uuidColumn } from "./utils/uuid-column";
 
 export class AuthorsGenresTables1716041837871 implements MigrationInterface {
   private readonly authorsTable!: Table;

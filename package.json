@@ -4,11 +4,11 @@
   "version": "0.0.1",
   "author": "Juan Wolfaardt <juanwolfaardt@gmail.com>",
   "license": "UNLICENSED",
-  "main": "src/index.ts",
   "scripts": {
     "start": "nodemon",
-    "migrations:run": "cd db && typeorm-ts-node-commonjs migration:run -d data-source.mjs",
-    "migrations:revert": "cd db && typeorm-ts-node-commonjs migration:revert -d data-source.mjs",
+    "typeorm": "ts-node -r tsconfig-paths/register node_modules/.bin/typeorm",
+    "migrations:run": "npm run typeorm -- migration:run -d db/data-source.ts",
+    "migrations:revert": "npm run typeorm -- migration:revert -d db/data-source.ts",
     "format": "prettier -lw .",
     "type-check": "tsc",
     "lint": "eslint .",
@@ -28,6 +28,7 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.13"

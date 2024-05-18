@@ -1,6 +1,6 @@
+import { apiUserUsername } from "@utils/db-api-user";
+import { getEnvVar } from "@utils/env-vars";
 import { MigrationInterface, QueryRunner } from "typeorm";
-
-import { apiUserUsername, getEnvVar } from "./utils/env-vars";
 
 export class ApiUser1716037753400 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
