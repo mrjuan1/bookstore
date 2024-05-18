@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import Book from "@data/entities/book";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: "authors", schema: "metadata" })
 export default class Author {
@@ -13,4 +14,7 @@ export default class Author {
 
   @UpdateDateColumn({ insert: false })
   updated!: Date;
+
+  @OneToMany(() => Book, (book: Book) => book.author, { lazy: true, nullable: false })
+  books!: Promise<Book[]>;
 }
