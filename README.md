@@ -109,3 +109,7 @@ npm run lint
 # Will do all the above in that specified order
 npm run checks
 ```
+
+### Tests
+
+<!-- TODO: Fill out this area -->
