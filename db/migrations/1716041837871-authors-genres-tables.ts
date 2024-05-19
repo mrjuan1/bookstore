@@ -31,7 +31,7 @@ export class AuthorsGenresTables1716041837871 implements MigrationInterface {
 
       // Assign API user appropriate access to table columns
       await queryRunner.query(
-        `GRANT INSERT(name), SELECT, UPDATE(name, updated), DELETE ON metadata.authors, metadata.genres TO "${apiUserUsername}"`,
+        `GRANT INSERT(uuid, name), SELECT, UPDATE(name, updated), DELETE ON metadata.authors, metadata.genres TO "${apiUserUsername}"`,
       );
 
       await queryRunner.commitTransaction();
@@ -47,7 +47,7 @@ export class AuthorsGenresTables1716041837871 implements MigrationInterface {
     try {
       // Remove API user's access to the table columns
       await queryRunner.query(
-        `REVOKE INSERT(name), SELECT, UPDATE(name, updated), DELETE ON metadata.authors, metadata.genres FROM "${apiUserUsername}"`,
+        `REVOKE INSERT(uuid, name), SELECT, UPDATE(name, updated), DELETE ON metadata.authors, metadata.genres FROM "${apiUserUsername}"`,
       );
 
       await queryRunner.dropTable(this.genresTable);

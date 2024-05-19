@@ -15,7 +15,9 @@ export interface DataRepositories {
 export const dataSource: DataSource = generateDataSource("API");
 
 export const getDataRepositories: GetDataRepositoriesFunc = async (): Promise<DataRepositories> => {
-  await dataSource.initialize();
+  if (!dataSource.isInitialized) {
+    await dataSource.initialize();
+  }
 
   return {
     author: dataSource.getRepository(Author),

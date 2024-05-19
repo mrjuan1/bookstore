@@ -70,7 +70,7 @@ export class BooksTable1716041844074 implements MigrationInterface {
 
       // Assign API user appropriate access to table columns
       await queryRunner.query(
-        `GRANT INSERT(name, author_uuid, genre_uuid, price), SELECT, UPDATE(name, author_uuid, genre_uuid, price, updated), DELETE ON products.books TO "${apiUserUsername}"`,
+        `GRANT INSERT(uuid, name, author_uuid, genre_uuid, price), SELECT, UPDATE(name, author_uuid, genre_uuid, price, updated), DELETE ON products.books TO "${apiUserUsername}"`,
       );
 
       await queryRunner.commitTransaction();
@@ -86,7 +86,7 @@ export class BooksTable1716041844074 implements MigrationInterface {
     try {
       // Remove API user's access to table columns
       await queryRunner.query(
-        `REVOKE INSERT(name, author_uuid, genre_uuid, price), SELECT, UPDATE(name, author_uuid, genre_uuid, price, updated), DELETE ON products.books FROM "${apiUserUsername}"`,
+        `REVOKE INSERT(uuid, name, author_uuid, genre_uuid, price), SELECT, UPDATE(name, author_uuid, genre_uuid, price, updated), DELETE ON products.books FROM "${apiUserUsername}"`,
       );
 
       await queryRunner.dropCheckConstraint(this.booksTable, this.booksPriceCheck);

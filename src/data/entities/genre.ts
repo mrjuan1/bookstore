@@ -1,5 +1,5 @@
 import Book from "@data/entities/book";
-import { IsEmpty, IsString, Length } from "class-validator";
+import { IsNotEmpty, IsString, Length } from "class-validator";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: "genres", schema: "metadata" })
@@ -9,7 +9,7 @@ export default class Genre {
 
   @Column("varchar", { length: 30, nullable: false, unique: true })
   @IsString({ message: "Genre name must be a string" })
-  @IsEmpty({ message: "Genre name cannot be an empty string" })
+  @IsNotEmpty({ message: "Genre name cannot be an empty string" })
   @Length(1, 30, { message: "Genre name bust be between 1 and 30 characters long" })
   public name!: string;
 
