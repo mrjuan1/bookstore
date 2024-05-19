@@ -1,9 +1,9 @@
 {
   "name": "bookstore",
-  "description": "A small API to manage books, their authors and genres and calculate discounts on genre bundles",
   "version": "0.0.1",
   "author": "Juan Wolfaardt <juanwolfaardt@gmail.com>",
   "license": "UNLICENSED",
+  "description": "A small API to manage books, their authors and genres and calculate discounts on genre bundles",
   "main": "src/index.ts",
   "scripts": {
     "start": "nodemon",
@@ -13,6 +13,7 @@
     "type-check": "tsc",
     "lint": "eslint .",
     "test": "jest",
+    "test:watch": "jest --watch",
     "checks": "npm run format && npm run type-check && npm run lint && npm test"
   },
   "dependencies": {

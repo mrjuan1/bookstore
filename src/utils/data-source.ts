@@ -2,8 +2,9 @@ import { getEnvVar } from "@utils/env-vars";
 import { DataSource } from "typeorm";
 
 type DBUser = "MIGRATIONS" | "API";
+type GenerateDataSourceFunc = (dbUser: DBUser) => DataSource;
 
-export const generateDataSource = (dbUser: DBUser): DataSource =>
+export const generateDataSource: GenerateDataSourceFunc = (dbUser: DBUser): DataSource =>
   new DataSource({
     // @ts-expect-error Not sure how to deal with casting a generic string to a string literal
     type: getEnvVar("DB_TYPE"),
