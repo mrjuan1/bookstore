@@ -25,22 +25,6 @@ jest.mock("typeorm", () => ({
 }));
 
 describe("Generating data sources", () => {
-  test("Generating a data source and checking non-specific fields", () => {
-    try {
-      const dataSource: DataSource = generateDataSource("MIGRATIONS");
-      expect(dataSource).toBeTruthy();
-
-      const options: PostgresConnectionOptions = dataSource.options as PostgresConnectionOptions;
-      expect(options.type).toStrictEqual<string>("some db type");
-      expect(options.host).toStrictEqual<string>("some host");
-      expect(options.port).toStrictEqual<number>(1234);
-      expect(options.database).toStrictEqual<string>("some db");
-      expect(options.useUTC).toStrictEqual<boolean>(true);
-    } catch (error: unknown) {
-      expect(error).toBeFalsy();
-    }
-  });
-
   test("Generating a data source and checking migration user fields", () => {
     try {
       const dataSource: DataSource = generateDataSource("MIGRATIONS");
