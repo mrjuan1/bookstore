@@ -1,17 +1,35 @@
 import "reflect-metadata";
 
-import { addAuthor } from "@data/author";
 import { dataSource } from "@data/data-access";
 import Author from "@data/entities/author";
+import { createAuthor, deleteAuthor, getAuthor, updateAuthor } from "@data/author";
 
 const main = async (): Promise<void> => {
-  const author: Author = await addAuthor("Mister Book Person");
-  console.log(author);
+  try {
+    const createdAuthor: Author = await createAuthor("Some author");
+    console.log(createdAuthor);
 
-  await dataSource.destroy();
+    const updatedAuthor: Author = await updateAuthor("Some author", "Some other author");
+    console.log(updatedAuthor);
+
+    await deleteAuthor("Some other author");
+
+    const author: Author = await getAuthor("Some other author");
+    console.log(author);
+
+    await dataSource.destroy();
+  } catch (error: unknown) {
+    if (dataSource.isInitialized) {
+      await dataSource.destroy();
+    }
+
+    throw error;
+  }
 };
 
-main().catch((error: unknown) => {
-  console.error("An error has occurred:", error);
+main().catch(async (error: unknown) => {
+  const castError: Error = error as Error;
+  console.error("An error has occurred:", castError.message);
+
   process.exit(1);
 });
