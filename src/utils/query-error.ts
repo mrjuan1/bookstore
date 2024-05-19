@@ -11,7 +11,7 @@ type QueryErrorWithDetail = QueryFailedError<ErrorWithDetail>;
 export const handleQueryError: HandleQueryErrorFunc = (error: unknown): unknown => {
   const castError: QueryErrorWithDetail = error as QueryErrorWithDetail;
 
-  if (castError.driverError) {
+  if (typeof castError.driverError !== "undefined") {
     return new Error(castError.driverError.detail);
   } else {
     return error;

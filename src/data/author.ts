@@ -11,7 +11,7 @@ export const addAuthor: AddAuthorFunc = async (name: string): Promise<Author> =>
 
     const errors: FieldError[] | null = await getValidationErrors(author);
     if (errors) {
-      throw errors;
+      throw new Error(JSON.stringify(errors));
     }
 
     const dataRepos: DataRepositories = await getDataRepositories();
