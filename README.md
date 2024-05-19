@@ -106,10 +106,18 @@ npm run type-check
 # Will lint check the entire code base using eslint and some typescript-specific plugins
 npm run lint
 
-# Will do all the above in that specified order
+# Will do all the above in that specified order, followed by running tests (see below)
 npm run checks
 ```
 
 ### Tests
 
-<!-- TODO: Fill out this area -->
+Tests can be run with one of the following commands:
+
+```sh
+# Runs all tests once-off
+npm test
+
+# Watches for changes to related files and automatically re-runs tests if any changes are detected
+npm run test:watch
+```
