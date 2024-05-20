@@ -1,21 +1,18 @@
 import "reflect-metadata";
 
-import { dataSource } from "@data/data-access";
-import Author from "@data/entities/author";
-import { createAuthor, deleteAuthor, getAuthor, updateAuthor } from "@data/author";
+import { createBook } from "@data/book";
+import { DataRepositories, dataSource, getDataRepositories } from "@data/data-access";
+import Book from "@data/entities/book";
 
 const main = async (): Promise<void> => {
   try {
-    const createdAuthor: Author = await createAuthor("Some author");
-    console.log(createdAuthor);
+    const createdBook: Book = await createBook("Some book", "Some author", "Some genre", 10000);
+    console.log(createdBook);
 
-    const updatedAuthor: Author = await updateAuthor("Some author", "Some other author");
-    console.log(updatedAuthor);
+    const dataRepos: DataRepositories = await getDataRepositories();
 
-    await deleteAuthor("Some other author");
-
-    const author: Author = await getAuthor("Some other author");
-    console.log(author);
+    const books: Book[] = await dataRepos.book.find();
+    console.log(books);
 
     await dataSource.destroy();
   } catch (error: unknown) {

@@ -87,7 +87,7 @@ jest.mock("typeorm", () => {
 
 describe("Managing genres", () => {
   describe("Creating genres", () => {
-    test("Creating an genre with a valid name", async () => {
+    test("Creating a genre with a valid name", async () => {
       try {
         const genre: Genre = await createGenre("new genre");
         expect(genre).toBeTruthy();
@@ -97,7 +97,7 @@ describe("Managing genres", () => {
       }
     });
 
-    test("Creating an genre with a name that already exists", async () => {
+    test("Creating a genre with a name that already exists", async () => {
       try {
         const genre: Genre = await createGenre("existing genre");
         expect(genre).toBeFalsy();
@@ -105,11 +105,11 @@ describe("Managing genres", () => {
         expect(error).toBeTruthy();
 
         const castError: Error = error as Error;
-        expect(castError.message).toStrictEqual<string>('An genre with the name "existing genre" already exists');
+        expect(castError.message).toStrictEqual<string>('A genre with the name "existing genre" already exists');
       }
     });
 
-    test("Creating an genre with a blank name", async () => {
+    test("Creating a genre with a blank name", async () => {
       try {
         const genre: Genre = await createGenre("");
         expect(genre).toBeFalsy();
@@ -143,11 +143,11 @@ describe("Managing genres", () => {
         expect(error).toBeTruthy();
 
         const castError: Error = error as Error;
-        expect(castError.message).toStrictEqual<string>('An genre with the name "non-existant genre" doesn\'t exist');
+        expect(castError.message).toStrictEqual<string>('A genre with the name "non-existant genre" doesn\'t exist');
       }
     });
 
-    test("Getting an genre with an empty string as the name", async () => {
+    test("Getting a genre with an empty string as the name", async () => {
       try {
         const genre: Genre = await getGenre("");
         expect(genre).toBeFalsy();
@@ -179,11 +179,11 @@ describe("Managing genres", () => {
         expect(error).toBeTruthy();
 
         const castError: Error = error as Error;
-        expect(castError.message).toStrictEqual<string>('An genre with the name "non-existant genre" doesn\'t exist');
+        expect(castError.message).toStrictEqual<string>('A genre with the name "non-existant genre" doesn\'t exist');
       }
     });
 
-    test("Updating to an genre that already exists", async () => {
+    test("Updating to a genre that already exists", async () => {
       try {
         const genre: Genre = await updateGenre("existing genre", "another existing genre");
         expect(genre).toBeFalsy();
@@ -192,12 +192,12 @@ describe("Managing genres", () => {
 
         const castError: Error = error as Error;
         expect(castError.message).toStrictEqual<string>(
-          'An genre with the name "another existing genre" already exists',
+          'A genre with the name "another existing genre" already exists',
         );
       }
     });
 
-    test("Updating an genre with an empty string as the name", async () => {
+    test("Updating a genre with an empty string as the name", async () => {
       try {
         const genre: Genre = await updateGenre("", "updated genre");
         expect(genre).toBeFalsy();
@@ -209,7 +209,7 @@ describe("Managing genres", () => {
       }
     });
 
-    test("Updating an genre with an empty string as the updated name", async () => {
+    test("Updating a genre with an empty string as the updated name", async () => {
       try {
         const genre: Genre = await updateGenre("existing genre", "");
         expect(genre).toBeFalsy();
@@ -223,7 +223,7 @@ describe("Managing genres", () => {
       }
     });
 
-    test("Updating an genre with an its current name as the updated name", async () => {
+    test("Updating a genre with an its current name as the updated name", async () => {
       try {
         const genre: Genre = await updateGenre("genre", "genre");
         expect(genre).toBeFalsy();
@@ -262,16 +262,16 @@ describe("Managing genres", () => {
         expect(error).toBeTruthy();
 
         const castError: Error = error as Error;
-        expect(castError.message).toStrictEqual<string>('An genre with the name "non-existant genre" doesn\'t exist');
+        expect(castError.message).toStrictEqual<string>('A genre with the name "non-existant genre" doesn\'t exist');
       }
     });
 
-    test("Deleting an genre with an empty string as the name", async () => {
+    test("Deleting a genre with an empty string as the name", async () => {
       try {
         await deleteGenre("");
 
         // Same as above
-        expect("Deleting an genre with an empty string as the name didn't fail").toBeTruthy();
+        expect("Deleting a genre with an empty string as the name didn't fail").toBeTruthy();
       } catch (error: unknown) {
         expect(error).toBeTruthy();
 

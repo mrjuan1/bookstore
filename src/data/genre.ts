@@ -26,7 +26,7 @@ export const createGenre = async (name: string): Promise<Genre> => {
     const castError: Error = handledError as Error;
 
     if (castError.message.endsWith("already exists.")) {
-      throw new Error(`An genre with the name "${name}" already exists`);
+      throw new Error(`A genre with the name "${name}" already exists`);
     }
 
     throw handledError;
@@ -48,7 +48,7 @@ export const getGenre = async (name: string): Promise<Genre> => {
     const castError: Error = handledError as Error;
 
     if (castError.message.startsWith("Could not find")) {
-      throw new Error(`An genre with the name "${name}" doesn't exist`);
+      throw new Error(`A genre with the name "${name}" doesn't exist`);
     }
 
     throw handledError;
@@ -81,7 +81,7 @@ export const updateGenre = async (existingName: string, newName: string): Promis
     const castError: Error = handledError as Error;
 
     if (castError.message.endsWith("already exists.")) {
-      throw new Error(`An genre with the name "${newName}" already exists`);
+      throw new Error(`A genre with the name "${newName}" already exists`);
     }
 
     throw handledError;

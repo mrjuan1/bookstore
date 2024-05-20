@@ -1,6 +1,6 @@
 import Author from "@data/entities/author";
 import Genre from "@data/entities/genre";
-import { IsDefined, IsInt, IsNotEmpty, IsString, IsUUID, Length, Min } from "class-validator";
+import { IsDefined, IsInt, IsNotEmpty, IsObject, IsString, IsUUID, Length, Min } from "class-validator";
 import {
   BaseEntity,
   Column,
@@ -20,7 +20,7 @@ export default class Book extends BaseEntity {
   @IsUUID(4, { message: "Book UUID must be a UUIDv4 string" })
   public readonly uuid!: string;
 
-  @Column("varchar", { length: 100, nullable: false, unique: true })
+  @Column("varchar", { length: 100, nullable: false })
   @IsDefined({ message: "Book name is required" })
   @IsString({ message: "Book name must be a string" })
   @IsNotEmpty({ message: "Book name cannot be an empty string" })
@@ -41,11 +41,15 @@ export default class Book extends BaseEntity {
 
   @ManyToOne(() => Author, { eager: true, nullable: false, cascade: ["insert"] })
   @JoinColumn({ name: "author_uuid" })
-  public readonly author!: Author;
+  @IsDefined({ message: "Book author is required" })
+  @IsObject({ message: "Book author must be an instance of the Author class" })
+  public author!: Author;
 
   @ManyToOne(() => Genre, { eager: true, nullable: false, cascade: ["insert"] })
   @JoinColumn({ name: "genre_uuid" })
-  public readonly genre!: Genre;
+  @IsDefined({ message: "Book genre is required" })
+  @IsObject({ message: "Book genre must be an instance of the Genre class" })
+  public genre!: Genre;
 
   constructor(name: string, price: number) {
     super();
