@@ -1,8 +1,7 @@
 import "dotenv/config";
 
-type GetEnvVarFunc = (name: string) => string;
 
-export const getEnvVar: GetEnvVarFunc = (name: string): string => {
+export const getEnvVar = (name: string): string => {
   if (process.env[name]) {
     return String(process.env[name]);
   } else {

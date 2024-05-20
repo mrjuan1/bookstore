@@ -6,10 +6,9 @@ export interface FieldError {
   errors: string[];
 }
 
-type GetFieldErrorsFunc = (errors: ValidationError[]) => FieldError[];
 type GetValidationErrors = (object: object) => Promise<FieldError[] | null>;
 
-const getFieldErrors: GetFieldErrorsFunc = (errors: ValidationError[]): FieldError[] =>
+const getFieldErrors = (errors: ValidationError[]): FieldError[] =>
   errors.map<FieldError>((error: ValidationError): FieldError => {
     let errors: string[] = [];
 

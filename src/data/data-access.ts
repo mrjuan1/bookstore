@@ -4,8 +4,6 @@ import Genre from "@data/entities/genre";
 import { generateDataSource } from "@utils/data-source";
 import { DataSource, Repository } from "typeorm";
 
-type GetDataRepositoriesFunc = () => Promise<DataRepositories>;
-
 export interface DataRepositories {
   author: Repository<Author>;
   genre: Repository<Genre>;
@@ -14,7 +12,7 @@ export interface DataRepositories {
 
 export const dataSource: DataSource = generateDataSource("API");
 
-export const getDataRepositories: GetDataRepositoriesFunc = async (): Promise<DataRepositories> => {
+export const getDataRepositories = async (): Promise<DataRepositories> => {
   if (!dataSource.isInitialized) {
     await dataSource.initialize();
   }

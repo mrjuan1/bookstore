@@ -1,32 +1,18 @@
 import "reflect-metadata";
 
-import { createBook } from "@data/book";
-import { DataRepositories, dataSource, getDataRepositories } from "@data/data-access";
-import Book from "@data/entities/book";
+import { setupBooksEndpoints } from "@endpoints/books";
+import { setupDiscountEndpoint } from "@endpoints/discount";
+import { getEnvVar } from "@utils/env-vars";
+import bodyParser from "body-parser";
+import express, { Express } from "express";
 
-const main = async (): Promise<void> => {
-  try {
-    const createdBook: Book = await createBook("Some book", "Some author", "Some genre", 10000);
-    console.log(createdBook);
+const app: Express = express();
+app.use(bodyParser.json());
 
-    const dataRepos: DataRepositories = await getDataRepositories();
+setupBooksEndpoints(app);
+setupDiscountEndpoint(app);
 
-    const books: Book[] = await dataRepos.book.find();
-    console.log(books);
-
-    await dataSource.destroy();
-  } catch (error: unknown) {
-    if (dataSource.isInitialized) {
-      await dataSource.destroy();
-    }
-
-    throw error;
-  }
-};
-
-main().catch((error: unknown) => {
-  const castError: Error = error as Error;
-  console.error("An error has occurred:", castError.message);
-
-  process.exit(1);
+const port: number = parseInt(getEnvVar("API_PORT"));
+app.listen(port, () => {
+  console.log("API running on port 3000");
 });

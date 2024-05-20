@@ -1,8 +1,6 @@
 import { TableColumnOptions } from "typeorm";
 
-type GenerateNameColumnFunc = (length: number, unique?: boolean) => TableColumnOptions;
-
-export const generateNameColumn: GenerateNameColumnFunc = (length: number, unique?: boolean): TableColumnOptions => {
+export const generateNameColumn = (length: number, unique?: boolean): TableColumnOptions => {
   if (length <= 0) {
     throw new Error("Name column length must be more than 0");
   }

@@ -2,9 +2,8 @@ import { getEnvVar } from "@utils/env-vars";
 import { DataSource } from "typeorm";
 
 type DBUser = "MIGRATIONS" | "API";
-type GenerateDataSourceFunc = (dbUser: DBUser) => DataSource;
 
-export const generateDataSource: GenerateDataSourceFunc = (dbUser: DBUser): DataSource => {
+export const generateDataSource = (dbUser: DBUser): DataSource => {
   const portStr: string = getEnvVar("DB_PORT");
   const port: number = parseInt(portStr);
   if (isNaN(port)) {

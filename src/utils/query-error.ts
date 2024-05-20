@@ -1,7 +1,5 @@
 import { QueryFailedError } from "typeorm";
 
-type HandleQueryErrorFunc = (error: unknown) => unknown;
-
 export interface ErrorWithExtras extends Error {
   table: string;
   detail: string;
@@ -9,7 +7,7 @@ export interface ErrorWithExtras extends Error {
 
 export type QueryErrorWithExtras = QueryFailedError<ErrorWithExtras>;
 
-export const handleQueryError: HandleQueryErrorFunc = (error: unknown): unknown => {
+export const handleQueryError = (error: unknown): unknown => {
   if (error) {
     const castError: QueryErrorWithExtras = error as QueryErrorWithExtras;
 

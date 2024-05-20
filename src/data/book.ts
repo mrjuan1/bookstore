@@ -7,7 +7,7 @@ import { getGenre } from "@data/genre";
 import { handleQueryError } from "@utils/query-error";
 import { FieldError, getValidationErrors } from "@utils/validation-errors";
 
-interface BookUpdateOptions {
+export interface BookUpdateOptions {
   name?: string;
   author?: string;
   genre?: string;
