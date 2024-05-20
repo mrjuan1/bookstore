@@ -40,7 +40,7 @@ export const getAuthor = async (name: string): Promise<Author> => {
     }
 
     const dataRepos: DataRepositories = await getDataRepositories();
-    const author: Author = await dataRepos.author.findOneByOrFail({ name: name });
+    const author: Author = await dataRepos.author.findOneByOrFail({ name });
 
     return author;
   } catch (error: unknown) {

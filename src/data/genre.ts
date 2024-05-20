@@ -40,7 +40,7 @@ export const getGenre = async (name: string): Promise<Genre> => {
     }
 
     const dataRepos: DataRepositories = await getDataRepositories();
-    const genre: Genre = await dataRepos.genre.findOneByOrFail({ name: name });
+    const genre: Genre = await dataRepos.genre.findOneByOrFail({ name });
 
     return genre;
   } catch (error: unknown) {

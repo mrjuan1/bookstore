@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { createBook } from "@data/book";
+import { createBook, getBook } from "@data/book";
 import Book from "@data/entities/book";
 
 jest.mock("typeorm", () => {
@@ -74,10 +74,20 @@ jest.mock("typeorm", () => {
             res(entity);
           });
         },
-        findOneByOrFail: async (query: { name: string }): Promise<unknown> =>
+        findOneByOrFail: async (query: { uuid: string; name: string }): Promise<unknown> =>
           new Promise((res, rej) => {
             if (query.name === "existing author" || query.name === "existing genre") {
               res({});
+              return;
+            }
+
+            if (query.uuid === "a valid uuid") {
+              res({ name: "existing book" });
+              return;
+            }
+
+            if (query.uuid === "a non-existant uuid") {
+              rej(new Error("Could not find"));
               return;
             }
 
@@ -151,41 +161,41 @@ describe("Managing books", () => {
     });
   });
 
-  // describe("Getting books", () => {
-  //   test("Getting an existing book", async () => {
-  //     try {
-  //       const book: Book = await getBook("existing book");
-  //       expect(book).toBeTruthy();
-  //       expect(book.name).toStrictEqual<string>("existing book");
-  //     } catch (error: unknown) {
-  //       expect(error).toBeFalsy();
-  //     }
-  //   });
+  describe("Getting books", () => {
+    test("Getting an existing book", async () => {
+      try {
+        const book: Book = await getBook("a valid uuid");
+        expect(book).toBeTruthy();
+        expect(book.name).toStrictEqual<string>("existing book");
+      } catch (error: unknown) {
+        expect(error).toBeFalsy();
+      }
+    });
 
-  //   test("Getting a non-existant book", async () => {
-  //     try {
-  //       const book: Book = await getBook("non-existant book");
-  //       expect(book).toBeFalsy();
-  //     } catch (error: unknown) {
-  //       expect(error).toBeTruthy();
+    test("Getting a non-existant book", async () => {
+      try {
+        const book: Book = await getBook("a non-existant uuid");
+        expect(book).toBeFalsy();
+      } catch (error: unknown) {
+        expect(error).toBeTruthy();
 
-  //       const castError: Error = error as Error;
-  //       expect(castError.message).toStrictEqual<string>('A book with the name "non-existant book" doesn\'t exist');
-  //     }
-  //   });
+        const castError: Error = error as Error;
+        expect(castError.message).toStrictEqual<string>('A book with the UUID "a non-existant uuid" doesn\'t exist');
+      }
+    });
 
-  //   test("Getting a book with an empty string as the name", async () => {
-  //     try {
-  //       const book: Book = await getBook("");
-  //       expect(book).toBeFalsy();
-  //     } catch (error: unknown) {
-  //       expect(error).toBeTruthy();
+    test("Getting a book with an empty string for the UUID", async () => {
+      try {
+        const book: Book = await getBook("");
+        expect(book).toBeFalsy();
+      } catch (error: unknown) {
+        expect(error).toBeTruthy();
 
-  //       const castError: Error = error as Error;
-  //       expect(castError.message).toStrictEqual<string>("A name of an existing book is required to fetch that book");
-  //     }
-  //   });
-  // });
+        const castError: Error = error as Error;
+        expect(castError.message).toStrictEqual<string>("The UUID of an existing book is required to fetch that book");
+      }
+    });
+  });
 
   // describe("Updating books", () => {
   //   test("Updating an existing book", async () => {

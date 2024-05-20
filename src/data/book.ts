@@ -69,14 +69,14 @@ export const createBook = async (name: string, authorName: string, genreName: st
   }
 };
 
-export const getBook = async (name: string): Promise<Book> => {
+export const getBook = async (uuid: string): Promise<Book> => {
   try {
-    if (!name) {
-      throw new Error("A name of an existing book is required to fetch that book");
+    if (!uuid) {
+      throw new Error("The UUID of an existing book is required to fetch that book");
     }
 
     const dataRepos: DataRepositories = await getDataRepositories();
-    const book: Book = await dataRepos.book.findOneByOrFail({ name: name });
+    const book: Book = await dataRepos.book.findOneByOrFail({ uuid });
 
     return book;
   } catch (error: unknown) {
@@ -84,7 +84,7 @@ export const getBook = async (name: string): Promise<Book> => {
     const castError: Error = handledError as Error;
 
     if (castError.message.startsWith("Could not find")) {
-      throw new Error(`A book with the name "${name}" doesn't exist`);
+      throw new Error(`A book with the UUID "${uuid}" doesn't exist`);
     }
 
     throw handledError;
