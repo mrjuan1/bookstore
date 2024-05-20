@@ -27,7 +27,7 @@ const main = async (): Promise<void> => {
   }
 };
 
-main().catch(async (error: unknown) => {
+main().catch((error: unknown) => {
   const castError: Error = error as Error;
   console.error("An error has occurred:", castError.message);
 

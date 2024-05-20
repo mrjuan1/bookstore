@@ -80,10 +80,6 @@ export const updateAuthor = async (existingName: string, newName: string): Promi
     const handledError: unknown = handleQueryError(error);
     const castError: Error = handledError as Error;
 
-    if (castError.message.startsWith("Could not find")) {
-      throw new Error(`An author with the name "${existingName}" doesn't exist`);
-    }
-
     if (castError.message.endsWith("already exists.")) {
       throw new Error(`An author with the name "${newName}" already exists`);
     }
@@ -101,13 +97,6 @@ export const deleteAuthor = async (name: string): Promise<void> => {
     const author: Author = await getAuthor(name);
     await author.remove();
   } catch (error: unknown) {
-    const handledError: unknown = handleQueryError(error);
-    const castError: Error = handledError as Error;
-
-    if (castError.message.startsWith("Could not find")) {
-      throw new Error(`An author with the name "${name}" doesn't exist`);
-    }
-
-    throw handledError;
+    throw handleQueryError(error);
   }
 };
