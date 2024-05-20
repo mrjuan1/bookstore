@@ -13,7 +13,7 @@ jest.mock("typeorm", () => {
 
     public getRepository(): unknown {
       class MockAuthor extends Author {
-        public override async save(): Promise<this> {
+        public override save(): Promise<this> {
           return new Promise((res, rej) => {
             let error: Error | undefined;
 
@@ -34,7 +34,7 @@ jest.mock("typeorm", () => {
           });
         }
 
-        public override async remove(): Promise<this> {
+        public override remove(): Promise<this> {
           return new Promise((res, rej) => {
             if (this.name === "non-existant author") {
               const error: Error = new Error("Could not find");
@@ -51,11 +51,11 @@ jest.mock("typeorm", () => {
       const author: MockAuthor = new MockAuthor("author");
 
       return {
-        save: async (entity: Author): Promise<Author> => {
+        save: (entity: Author): Promise<Author> => {
           author.name = entity.name;
           return author.save();
         },
-        findOneByOrFail: async (query: Author): Promise<Author> =>
+        findOneByOrFail: (query: Author): Promise<Author> =>
           new Promise((res, rej) => {
             if (query.name === "non-existant author") {
               const error: Error = new Error("Could not find");
@@ -261,7 +261,7 @@ describe("Managing authors", () => {
 
         // Same as above, except the function is expected to throw an error this time
         // Below is to allow the test to fail if nothing went wrong
-        expect("Deleting a non-existant author didn't fail").toBeTruthy();
+        expect("Deleting a non-existant author didn't fail").toBeFalsy();
       } catch (error: unknown) {
         expect(error).toBeTruthy();
 
@@ -275,7 +275,7 @@ describe("Managing authors", () => {
         await deleteAuthor("");
 
         // Same as above
-        expect("Deleting an author with an empty string as the name didn't fail").toBeTruthy();
+        expect("Deleting an author with an empty string as the name didn't fail").toBeFalsy();
       } catch (error: unknown) {
         expect(error).toBeTruthy();
 

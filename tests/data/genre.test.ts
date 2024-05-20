@@ -13,7 +13,7 @@ jest.mock("typeorm", () => {
 
     public getRepository(): unknown {
       class MockGenre extends Genre {
-        public override async save(): Promise<this> {
+        public override save(): Promise<this> {
           return new Promise((res, rej) => {
             let error: Error | undefined;
 
@@ -34,7 +34,7 @@ jest.mock("typeorm", () => {
           });
         }
 
-        public override async remove(): Promise<this> {
+        public override remove(): Promise<this> {
           return new Promise((res, rej) => {
             if (this.name === "non-existant genre") {
               const error: Error = new Error("Could not find");
@@ -51,11 +51,11 @@ jest.mock("typeorm", () => {
       const genre: MockGenre = new MockGenre("genre");
 
       return {
-        save: async (entity: Genre): Promise<Genre> => {
+        save: (entity: Genre): Promise<Genre> => {
           genre.name = entity.name;
           return genre.save();
         },
-        findOneByOrFail: async (query: Genre): Promise<Genre> =>
+        findOneByOrFail: (query: Genre): Promise<Genre> =>
           new Promise((res, rej) => {
             if (query.name === "non-existant genre") {
               const error: Error = new Error("Could not find");
@@ -257,7 +257,7 @@ describe("Managing genres", () => {
 
         // Same as above, except the function is expected to throw an error this time
         // Below is to allow the test to fail if nothing went wrong
-        expect("Deleting a non-existant genre didn't fail").toBeTruthy();
+        expect("Deleting a non-existant genre didn't fail").toBeFalsy();
       } catch (error: unknown) {
         expect(error).toBeTruthy();
 
@@ -271,7 +271,7 @@ describe("Managing genres", () => {
         await deleteGenre("");
 
         // Same as above
-        expect("Deleting a genre with an empty string as the name didn't fail").toBeTruthy();
+        expect("Deleting a genre with an empty string as the name didn't fail").toBeFalsy();
       } catch (error: unknown) {
         expect(error).toBeTruthy();
 
