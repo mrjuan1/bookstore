@@ -2,6 +2,35 @@
 
 A small API to manage books, their authors and genres and calculate discounts on genre bundles.
 
+## Notes
+
+This was all written and configured from the ground-up in about three days as an assignment. I've never built an API from the ground-up before, this this was a first for me.
+
+I sadly ended up wasting a lot of time on setup, configuration, validation, documentation and unit tests, leaving the endpoints for last when there was very little time left. So unfortunately those aren't in the best condition, but the rest of the application's data handling and unit tests should be quite good.
+
+TL;DR Setup:
+
+```sh
+git clone https://github.com/mrjuan1/bookstore
+cd bookstore
+npm i
+cp .env.example .env
+npm run checks # Does formatting, type-checking, linting and runs the init tests
+
+# Next, get a PostgreSQL server up-and-running and have its root user's password handy
+./db/setup.sh
+npm run migrations:run
+npm start
+
+# Add some books and get their genre's total discount
+curl -X POST -H "Content-Type: application/json" -d '{"name":"Book A","author":"Mr Book Person","genre":"Fantasy","price":250}' -i localhost:3000/books
+curl -X POST -H "Content-Type: application/json" -d '{"name":"Book B","author":"Mr Book Person","genre":"Fantasy","price":250}' -i localhost:3000/books
+curl -i 'localhost:3000/discount?genre=Fantasy&discount=10'
+# Should return a total discount of 450 (250 + 250 = 500, 10% of 500 is 50, sub 50 from 500 and get 450)
+```
+
+See below for more detailed information on each part of this repository.
+
 ## Requirements
 
 To run and build the project, NodeJS and NPM are required. Not tested with Yarn and Bun, some changes to `package.json` might be required for these _(will test and update later)_.
